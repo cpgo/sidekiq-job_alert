@@ -29,6 +29,8 @@ module Sidekiq
       private
 
       def make_dead_job_message
+        return '' unless @slack_config['alert_dead_jobs']
+
         cnt = Sidekiq::JobAlert::Queue.dead_job_cnt
         cnt.positive? ? make_message('alert_dead_jobs', cnt) : ''
       end
